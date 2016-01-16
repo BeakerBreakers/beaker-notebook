@@ -79,8 +79,7 @@ define(function(require, exports, module) {
             tooltip: "Open a bkr notebook file from Google Drive",
             sortorder: 110,
             action: function() {
-              // TODO this is temporary
-              bkHelper.openWithDialog('bkr');
+              bkHelper.openWithGoogleDrive();
             }
           }
         ]

@@ -253,6 +253,99 @@
           });
         }
       },
+
+      openWithGoogleDrive: function() {
+        // The Browser API key obtained from the Google Developers Console.
+        // Replace with your own Browser API key, or your own key.
+        var developerKey = 'AIzaSyDsVaB7J6jkdE3BLWCkuXyWysVAHzoR-Yk';
+
+        // The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
+        var clientId = "823420155699-gg9fm1asa9qtl10oitfvc5btl21otpmj.apps.googleusercontent.com";
+
+        // Replace with your own App ID. (Its the first number in your Client ID)
+        var appId = "823420155699";
+
+        // Scope to use to access user's Drive items.
+        var scope = ['https://www.googleapis.com/auth/drive'];
+
+        var pickerApiLoaded = false;
+        var oauthToken;
+
+        gapi.client.setApiKey(developerKey);
+        loadPicker();
+
+        // Use the Google API Loader script to load the google.picker script.
+        function loadPicker() {
+          console.log("loadPicker");
+          gapi.load('picker', {'callback': onPickerApiLoad});
+        }
+
+        function onAuthApiLoad() {
+          console.log("onAuthApiLoad");
+          window.gapi.auth.authorize(
+              {
+                'client_id': clientId,
+                'scope': scope,
+                'immediate': false
+              },
+              handleAuthResult);
+        }
+
+        function onPickerApiLoad() {
+          console.log("onPickerApiLoad");
+          pickerApiLoaded = true;
+          createPicker();
+        }
+
+        function handleAuthResult(authResult) {
+          console.log("handleAuthResult");
+          console.log(authResult);
+          console.log(authResult.error);
+          if (authResult && !authResult.error) {
+            oauthToken = authResult.access_token;
+            console.log(oauthToken);
+            createPicker();
+          }
+        }
+
+        // Create and render a Picker object for searching images.
+        function createPicker() {
+          console.log("createPicker");
+          console.log(pickerApiLoaded);
+          console.log(oauthToken);
+          if (!oauthToken) {
+            console.log("oauthToken was undefined, calling onAuthApiLoad");
+            onAuthApiLoad();
+            return;
+          }
+          if (pickerApiLoaded) {
+            console.log("got past if statement, pickerApiLoaded true");
+            var view = new google.picker.DocsView()
+                .setSelectFolderEnabled(false)
+                .setMode(google.picker.DocsViewMode.LIST);
+            // TODO: set MIME type to beaker files
+            console.log("DEVELOPER KEY");
+            console.log(developerKey);
+            var picker = new google.picker.PickerBuilder()
+                .setAppId(appId)
+                .setOAuthToken(oauthToken)
+                .addView(view)
+                .setDeveloperKey(developerKey)
+                .setCallback(pickerCallback)
+                .build();
+             picker.setVisible(true);
+          }
+      }
+
+        // A simple callback implementation.
+        function pickerCallback(data) {
+          if (data.action == google.picker.Action.PICKED) {
+            var fileId = data.docs[0].id;
+            alert('The user selected: ' + fileId);
+          }
+        }
+      },
+
       Electron: bkElectron,
       // current app
       getCurrentAppName: function() {
