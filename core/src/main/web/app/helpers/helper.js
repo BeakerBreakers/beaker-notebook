@@ -253,17 +253,16 @@
           });
         }
       },
-
       openWithGoogleDrive: function() {
         // The Browser API key obtained from the Google Developers Console.
         // Replace with your own Browser API key, or your own key.
-        var developerKey = 'AIzaSyDsVaB7J6jkdE3BLWCkuXyWysVAHzoR-Yk';
+        var developerKey = 'AIzaSyBmyfPsHxdHrKhTcnpJzyBUz4yGCSNCGMM';
 
         // The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
-        var clientId = "823420155699-gg9fm1asa9qtl10oitfvc5btl21otpmj.apps.googleusercontent.com";
+        var clientId = "375214801694-a1tk845vagitrf23pqksgq535gc5cmpq.apps.googleusercontent.com";
 
         // Replace with your own App ID. (Its the first number in your Client ID)
-        var appId = "823420155699";
+        var appId = "375214801694";
 
         // Scope to use to access user's Drive items.
         var scope = ['https://www.googleapis.com/auth/drive'];
@@ -337,15 +336,15 @@
           }
       }
 
-        // A simple callback implementation.
+        // Open the notebook that the user picked.
         function pickerCallback(data) {
           if (data.action == google.picker.Action.PICKED) {
-            var fileId = data.docs[0].id;
-            alert('The user selected: ' + fileId);
+            var doc = _.first(data.docs);
+            console.log("THE USER PICKED THIS DOCUMENT:", doc);
+            bkHelper.openNotebook(doc, GLOBALS.FILE_LOCATION.GDRIVE, true, 'bkr');
           }
         }
       },
-
       Electron: bkElectron,
       // current app
       getCurrentAppName: function() {

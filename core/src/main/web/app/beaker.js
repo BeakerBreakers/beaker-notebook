@@ -300,8 +300,20 @@
           }
           return ret;
         },
+        /**
+         * Issues an Angular $location.path() call to load the notebook located at notebookUri.
+         *
+         * I.e., navigates to    /open?notebookUri=X&uriType=Y&readOnly=Z&format=ZZ
+         *
+         * @param notebookUri Location of the notebook
+         * @param uriType
+         * @param readOnly
+         * @param format
+         * @returns The return value of $location.path('/open')
+         */
         openNotebook: function(notebookUri, uriType, readOnly, format) {
           if (!notebookUri) {
+            console.log("Attempted to open a notebook without providing a URI.");
             return;
           }
           var routeParams = {

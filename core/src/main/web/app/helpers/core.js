@@ -57,7 +57,7 @@
       return path.split('/').pop() !== '';
     }
 
-    var FileSystemFileChooserStrategy = function (){
+    var FileSystemFileChooserStrategy = function () {
       var newStrategy = this;
       newStrategy.manualName = '';
       newStrategy.input = "";
@@ -166,6 +166,7 @@
     var LOCATION_FILESYS = GLOBALS.FILE_LOCATION.FILESYS;
     var LOCATION_HTTP = GLOBALS.FILE_LOCATION.HTTP;
     var LOCATION_AJAX = GLOBALS.FILE_LOCATION.AJAX;
+    var LOCATION_GDRIVE = GLOBALS.FILE_LOCATION.GDRIVE;
 
     // fileLoaders are responsible for loading files and output the file content as string
     // fileLoader impl must define an 'load' method which returns a then-able
@@ -185,9 +186,18 @@
         return bkUtils.loadAjax(uri);
       }
     };
+    _fileLoaders[LOCATION_GDRIVE] = {
+      /**
+       * @param doc The parameter from the file picker callback.
+       * @returns {*}
+       */
+      load: function(doc) {
+        return bkUtils.loadGDrive(doc);
+      }
+    }
 
     // fileSavers are responsible for saving various formats into bkr
-    // fileLoader impl must define an 'load' method which returns a then-able
+    // fileLoader impl must define a 'load' method which returns a then-able
     var _fileSavers = {};
 
     _fileSavers[LOCATION_FILESYS] = {
@@ -207,6 +217,18 @@
         return bkUtils.saveAjax(uri, contentAsString);
       }
     };
+
+    _fileSavers[LOCATION_GDRIVE] = {
+      save: function() {
+        // TODO(jlipschultz)
+      },
+      rename: function() {
+        // TODO(jlipschultz)
+      },
+      showFileChooser: function() {
+        // TODO(jlipschultz) unsure if needed.
+      }
+    }
 
     var importInput = function() {
       var $input,

@@ -36,7 +36,8 @@
       FILE_LOCATION: {
         FILESYS: "file",
         HTTP: "http",
-        AJAX: "ajax"
+        AJAX: "ajax",
+        GDRIVE: "gdrive"
       },
       THEMES: {
         DEFAULT: 'default',

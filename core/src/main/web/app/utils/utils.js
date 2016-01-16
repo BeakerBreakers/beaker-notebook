@@ -292,6 +292,40 @@
             .error(deferred.reject);
         return deferred.promise;
       },
+      /**
+       * @param doc The doc JSON from the Google File Picker API.
+       * @see https://developers.google.com/picker/docs/results
+       */
+      loadGDrive: function(doc) {
+        var deferred = angularUtils.newDeferred();
+
+        gapi.client.load('drive', 'v2', function() {
+          gapi.client.drive.files.get({fileId: doc.id}).execute(function(file) {
+            console.log("THIS IS THE FILE DOWNLOADED FROM GOOGLE", file);
+
+            if (file.downloadUrl) {
+              var accessToken = gapi.auth.getToken().access_token;
+              var xhr = new XMLHttpRequest();
+              xhr.open('GET', file.downloadUrl);
+              xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+              xhr.onload = function() {
+                var content = xhr.responseText;
+                if (!_.isString(content)) {
+                  content = JSON.stringify(xhr.responseText);
+                }
+                deferred.resolve(content);
+              };
+              xhr.onerror = function() { deferred.reject; };
+              xhr.send();
+            } else {
+              deferred.reject;
+            }
+
+          });
+        });
+
+        return deferred.promise;
+      },
       renameFile: function(oldPath, newPath, overwrite) {
         var deferred = angularUtils.newDeferred();
         angularUtils.httpPost(serverUrl("beaker/rest/file-io/rename"), {newPath: newPath, oldPath: oldPath, overwrite: overwrite})

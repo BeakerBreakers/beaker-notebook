@@ -152,7 +152,7 @@
 
         $scope.isLocked = function() {
           return _impl._viewModel.isLocked();
-        }
+        };
 
         $scope.isDebugging = function () {
           return _impl._viewModel.isDebugging();

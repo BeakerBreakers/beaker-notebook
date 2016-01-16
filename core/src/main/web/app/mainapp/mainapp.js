@@ -156,6 +156,12 @@
           });
         };
 
+        /**
+         * Returns the following five functions:
+         * @type {{openUri, fromSession, fromImport, emptyNotebook, defaultNotebook}}
+         *
+         * openUri is a function(target, sessionId, retry, retryCountMax) where target is
+         */
         var loadNotebook = (function() {
           var loadNotebookModelAndResetSession = function(
               notebookUri, uriType, readOnly, format, notebookModel, edited, sessionId,
@@ -1061,7 +1067,7 @@
           }
         };
         $(document).bind('keydown', keydownHandler);
-        var onDestroy = function() {
+        var onDestroy = function/**/() {
           bkSessionManager.backup();
           stopAutoBackup();
           bkCoreManager.setBkAppImpl(null);
