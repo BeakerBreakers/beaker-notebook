@@ -245,7 +245,7 @@ define(function(require, exports, module) {
             id: "open-ipython-menuitem",
             reducedName: "Open...",
             tooltip: "Open a IPython notebook from file system and convert it to Beaker notebook",
-            sortorder: 110,
+            sortorder: 120,
             action: function() {
               bkHelper.openWithDialog('ipynb', 'file', true, IPYNB_PATH_PREFIX);
             }

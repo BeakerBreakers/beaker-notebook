@@ -83,7 +83,7 @@ define(function(require, exports, module) {
             }
           }
         ]
-      },
+      }
     ];
     menuItemsDeferred.resolve(toAdd);
   });
