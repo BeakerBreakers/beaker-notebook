@@ -230,8 +230,14 @@
                              tooltip: "Open a bkr notebook file from Google Drive",
                              sortorder: 110,
                              action: function() {
-                               // TODO
-                               //bkHelper.openWithDialog('bkr');
+                                // TODO this is temporary
+                                 bkHelper.showModalDialog(
+                                     function(originalUrl) {
+                                       bkHelper.openNotebook(originalUrl);
+                                     },
+                                     JST['template/opennotebook']({homedir: homeDir, extension: '.bkr'}),
+                                     bkHelper.getFileSystemFileChooserStrategy()
+                                 );
                            }
                            ]
                  }
