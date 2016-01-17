@@ -407,12 +407,10 @@
 
         // Use the Google API Loader script to load the google.picker script.
         function loadPicker() {
-          console.log("loadPicker");
           gapi.load('picker', {'callback': onPickerApiLoad});
         }
 
         function onAuthApiLoad() {
-          console.log("onAuthApiLoad");
           window.gapi.auth.authorize(
               {
                 'client_id': clientId,
@@ -423,40 +421,27 @@
         }
 
         function onPickerApiLoad() {
-          console.log("onPickerApiLoad");
           pickerApiLoaded = true;
           createPicker();
         }
 
         function handleAuthResult(authResult) {
-          console.log("handleAuthResult");
-          console.log(authResult);
-          console.log(authResult.error);
           if (authResult && !authResult.error) {
             oauthToken = authResult.access_token;
-            console.log(oauthToken);
             createPicker();
           }
         }
 
         // Create and render a Picker object for searching images.
         function createPicker() {
-          console.log("createPicker");
-          console.log(pickerApiLoaded);
-          console.log(oauthToken);
           if (!oauthToken) {
-            console.log("oauthToken was undefined, calling onAuthApiLoad");
             onAuthApiLoad();
             return;
           }
           if (pickerApiLoaded) {
-            console.log("got past if statement, pickerApiLoaded true");
             var view = new google.picker.DocsView()
                 .setSelectFolderEnabled(false)
                 .setMode(google.picker.DocsViewMode.LIST);
-            // TODO: set MIME type to beaker files
-            console.log("DEVELOPER KEY");
-            console.log(developerKey);
             var picker = new google.picker.PickerBuilder()
                 .setAppId(appId)
                 .setOAuthToken(oauthToken)

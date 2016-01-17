@@ -195,7 +195,6 @@
        * @returns {*}
        */
       load: function(doc) {
-        console.log("GDRIVE FILE LOADER CALLED BACK");
         return bkUtils.loadGDrive(doc);
       }
     };
