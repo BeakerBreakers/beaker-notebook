@@ -332,9 +332,7 @@
           console.log("about to route params");
           var ret = $location.path('/open').search(routeParams);
           console.log("routing done");
-          if (bkUtils.isElectron) {
-            $rootScope.$apply();
-          }
+          $rootScope.$apply();
           return ret;
         },
         newSession: function(empty) {
