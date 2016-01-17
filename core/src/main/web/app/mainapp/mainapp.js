@@ -402,6 +402,7 @@
               $scope.loading = true;
               showLoadingStatusMessage("Loading notebook");
               bkSession.load(sessionId).then(function(session) {
+                console.log("FROMSESSION SESSION LOAD", session);
                 var notebookUri = session.notebookUri;
                 var uriType = session.uriType;
                 var readOnly = session.readOnly;
@@ -469,7 +470,7 @@
             showLoadingStatusMessage("Saving");
           };
           var updateSessionStore = function(uri, uriType, readOnly) {
-            return bkSession.getSessions().then(function(sessions){
+            return bkSession.getSessions().then(function(sessions) {
               var sessionID = bkSessionManager.getSessionId();
               var currentSession = sessions[sessionID];
               currentSession.uriType = uriType;

@@ -26,7 +26,8 @@
     'bk.notebookNamespaceModelManager',
     'bk.recentMenu',
     'bk.evaluatorManager',
-    'bk.electron'
+    'bk.electron',
+    'bk.globals'
   ]);
 
   module.factory('bkSessionManager', function(
@@ -37,7 +38,8 @@
       bkNotebookNamespaceModelManager,
       bkEvaluatorManager,
       bkRecentMenu,
-      bkElectron) {
+      bkElectron,
+      GLOBALS) {
 
     var ImageIcon = function(data) {
       if (data === undefined || data.type !== "ImageIcon") {
@@ -778,7 +780,7 @@
 
     var generateBackupData = function() {
       return {
-        notebookUri: _notebookUri.get(),
+        notebookUri: JSON.stringify(_notebookUri.get()),
         uriType: _uriType,
         readOnly: _readOnly,
         format: _format,
@@ -912,6 +914,15 @@
         _uriType = uriType;
         _readOnly = readOnly;
         _format = format;
+        // Recover serialized JSON if the URI type is GDRIVE
+        if (uriType === GLOBALS.FILE_LOCATION.GDRIVE) {
+          console.log(notebookUri);
+          try {
+            notebookUri = JSON.parse(notebookUri)
+          } catch (error) {
+            console.log(error.message);
+          }
+        }
         _notebookUri.set(notebookUri);
         _notebookModel.set(notebookModel);
         bkHelper.initBeakerPrefs();
@@ -970,22 +981,27 @@
         _notebookUri.set(notebookUri);
       },
       getNotebookPath: function() {
-        if (_notebookUri.get()) {
-          return _notebookUri.get();
-        } else {
-          return "New Notebook";
+        var title = null;
+        if (this.getNotebookUriType() === GLOBALS.FILE_LOCATION.GDRIVE) {
+          console.log("GOOGLE OBJECT NOTEBOOK URI: ", _notebookUri.get());
+          title = _notebookUri.get().name;
+        } else if (_notebookUri.get()) {
+          title = _notebookUri.get();
         }
+        return title || "New Notebook";
       },
       getNotebookUriType: function() {
         return _uriType;
       },
       getNotebookTitle: function() {
-        if (_notebookUri.get() && _.isString(_notebookUri.get())) {
-          console.log(_notebookUri);
-          return _notebookUri.get().replace(/^.*[\\\/]/, '');
-        } else {
-          return "New Notebook";
+        var title = null;
+        if (this.getNotebookUriType() === GLOBALS.FILE_LOCATION.GDRIVE) {
+          console.log("GOOGLE OBJECT NOTEBOOK URI: ", _notebookUri.get());
+          title = _notebookUri.get().name;
+        } else if (_notebookUri.get()) {
+          title = _notebookUri.get().replace(/^.*[\\\/]/, '');
         }
+        return title || "New Notebook";
       },
       isSavable: function() {
         return _notebookUri && !_readOnly;
