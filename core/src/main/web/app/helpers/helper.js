@@ -364,7 +364,18 @@
                   ]
                 }
               });
-              request.execute(function(resp) { console.log(resp); });
+              request.execute(function(resp) {
+                console.log(resp);
+                gapi.client.load('drive', 'v2', function(){
+                  var request = gapi.client.request({
+                    'path': '/upload/drive/v2/files/' + folderId + "?fileId=" + fileId + "&uploadType=media",
+                    'method': 'PUT',
+                    'params': {'fileId': resp.id, 'uploadType': 'media'},
+                    'body': saveData.notebookModelAsString
+                  });
+                  request.execute(function(resp) {});
+                });
+              });
             });
 
             //TODO possiblly change the fileloader
