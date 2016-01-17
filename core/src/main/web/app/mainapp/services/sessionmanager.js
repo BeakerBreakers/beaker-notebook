@@ -980,7 +980,8 @@
         return _uriType;
       },
       getNotebookTitle: function() {
-        if (_notebookUri.get() && (typeof _notebookUri.get() === 'string')) {
+        if (_notebookUri.get() && _.isString(_notebookUri.get())) {
+          console.log(_notebookUri);
           return _notebookUri.get().replace(/^.*[\\\/]/, '');
         } else {
           return "New Notebook";

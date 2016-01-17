@@ -199,7 +199,6 @@
     // fileSavers are responsible for saving various formats into bkr
     // fileLoader impl must define a 'load' method which returns a then-able
     var _fileSavers = {};
-
     _fileSavers[LOCATION_FILESYS] = {
       save: function(uri, contentAsString, overwrite) {
         return bkUtils.saveFile(uri, contentAsString, overwrite);
@@ -211,19 +210,17 @@
         return bkCoreManager.showDefaultSavingFileChooser(initUri);
       }
     };
-
     _fileSavers[LOCATION_AJAX] = {
       save: function(uri, contentAsString) {
         return bkUtils.saveAjax(uri, contentAsString);
       }
     };
-
     _fileSavers[LOCATION_GDRIVE] = {
-      save: function() {
+      save: function(uri, contentAsString, overwrite) {
         // TODO(jlipschultz)
       },
       rename: function() {
-        // TODO(jlipschultz)
+        // TODO(jlipschultz) Probably will not implement
       },
       showFileChooser: function() {
         // TODO(jlipschultz) unsure if needed.
@@ -1155,7 +1152,7 @@
     };
     $scope.isWindows = function() {
       return bkUtils.isWindows;
-    }
+    };
     $rootScope.$on('modal.submit', function() {
       $scope.close($scope.getStrategy().getResult());
     });

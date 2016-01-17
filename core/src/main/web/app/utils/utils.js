@@ -315,12 +315,14 @@
                 }
                 deferred.resolve(content);
               };
-              xhr.onerror = function() { deferred.reject; };
+              xhr.onerror = function() {
+                console.log("ERROR: at XHR request");
+                deferred.reject; };
               xhr.send();
             } else {
+              console.log("ERROR: No file download URL present.");
               deferred.reject;
             }
-
           });
         });
 
