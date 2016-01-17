@@ -368,7 +368,7 @@
                 console.log(resp);
                 gapi.client.load('drive', 'v2', function(){
                   var request = gapi.client.request({
-                    'path': '/upload/drive/v2/files/' + folderId + "?fileId=" + fileId + "&uploadType=media",
+                    'path': '/upload/drive/v2/files/' + folderId + "?fileId=" + resp.id + "&uploadType=media",
                     'method': 'PUT',
                     'params': {'fileId': resp.id, 'uploadType': 'media'},
                     'body': saveData.notebookModelAsString
