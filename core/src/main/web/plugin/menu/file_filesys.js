@@ -77,7 +77,7 @@ define(function(require, exports, module) {
           }
         },
         {
-          name: "Save to Google Drive as... (file)",
+          name: "Save to Google Drive... (file)",
           id: "save-as-google-menuitem",
           reducedName: "Save to Drive...",
           tooltip: "Save a file to google drive",

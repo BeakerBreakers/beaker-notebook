@@ -472,7 +472,7 @@
           if (data.action == google.picker.Action.PICKED) {
             var doc = _.first(data.docs);
             console.log("THE USER PICKED THIS DOCUMENT:", doc);
-            bkHelper.openNotebook(doc, GLOBALS.FILE_LOCATION.GDRIVE, true, 'bkr');
+            bkHelper.openNotebook(doc, GLOBALS.FILE_LOCATION.GDRIVE, false, 'bkr');
           }
         }
       },

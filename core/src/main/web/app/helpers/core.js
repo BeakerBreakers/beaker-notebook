@@ -29,6 +29,7 @@
     'bk.notebookCellModelManager',
     'bk.treeView',
     'bk.electron',
+    'bk.angularUtils',
     'ngAnimate'
   ]);
 
@@ -45,12 +46,14 @@
       $location,
       $sessionStorage,
       $q,
+      $http,
       bkUtils,
       bkRecentMenu,
       bkNotebookCellModelManager,
       bkElectron,
       modalDialogOp,
       Upload,
+      angularUtils,
       GLOBALS) {
 
     function isFilePath(path) {
@@ -218,15 +221,58 @@
     };
     _fileSavers[LOCATION_GDRIVE] = {
       save: function(uri, contentAsString, overwrite) {
-        // TODO(jlipschultz)
+        var deferred = angularUtils.newDeferred();
+
+        // Create the File object
+        var parts = [new Blob([contentAsString], {type: 'application/octet-stream'})];
+        var file = new File(parts, uri.name, {
+          lastModified: new Date(0),
+          type: "application/octet-stream"
+        });
+
+        // Send the file request
+        var fileRequestParams = {
+          path: 'upload/drive/v3/files/'.concat(uri.id),
+          method: 'PATCH',
+          params: {
+            uploadType: 'media'
+          },
+          body: contentAsString
+        };
+        var request = gapi.client.request(fileRequestParams);
+        request.then(function (value) {
+          console.log("REQUEST WORKED:", value);
+          deferred.resolve();
+        }, function (reason) {
+          console.log("REQUEST FAILED:", reason);
+          deferred.reject();
+        });
+
+        // Update metadata (not sure if needed?)
+        //var metadataRequestParams = {
+        //  'path': 'drive/v3/files/'.concat(uri.id),
+        //  'method': 'PATCH',
+        //  'body': {
+        //    "title" : "Meta File 1.json",
+        //    "mimeType" : "application/json",
+        //    "description" : "This is a test of creating a metafile"
+        //  }
+        //};
+        //gapi.client.request(metadataRequestParams).then(function (value) {
+        //  deferred.resolve();
+        //}, function (reason) {
+        //  deferred.reject();
+        //});
+
+        return deferred.promise;
       },
       rename: function() {
         // TODO(jlipschultz) Probably will not implement
       },
       showFileChooser: function() {
-        // TODO(jlipschultz) unsure if needed.
+        // TODO(jlipschultz) Probably will not implement
       }
-    }
+    };
 
     var importInput = function() {
       var $input,

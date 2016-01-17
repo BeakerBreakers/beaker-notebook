@@ -190,9 +190,6 @@
           _savePromptIfOverwrite(deferred, uri, uriType);
           return deferred.promise;
         },
-        getSaveData: function () {
-          return bkSessionManager.getSaveData();
-        },
         saveNotebook: function (saveFailed) {
           var thenable;
           if (bkSessionManager.isSavable()) {
