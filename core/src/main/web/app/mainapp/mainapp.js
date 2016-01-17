@@ -603,6 +603,10 @@
               saveStart();
               return bkFileManipulation.saveNotebookAs(notebookUri, uriType).then(saveDone, saveFailed);
             },
+            getSaveData: function () {
+              saveStart();
+              return bkSessionManager.getSaveData();
+            },
             closeNotebook: closeNotebook,
             _closeNotebook: _closeNotebook,
             collapseAllSections: function() {
