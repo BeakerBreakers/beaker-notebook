@@ -238,7 +238,8 @@
         } else {
           var strategy = bkHelper.getFileSystemFileChooserStrategy();
           strategy.treeViewfs.extFilter = [ext];
-          bkUtils.all([bkUtils.getHomeDirectory(), bkUtils.getLocalDrives()]).then(function(values) {
+          bkUtils.a
+          ll([bkUtils.getHomeDirectory(), bkUtils.getLocalDrives()]).then(function(values) {
             if (bkUtils.isWindows) {
               strategy.localDrives = values[1];
             }

@@ -30,5 +30,6 @@
     'bk.recentMenu',
     'bk.evaluatePluginManager',
     'bk.electron',
-    'bk.connectionManager']);
+    'bk.connectionManager',
+    'bk.globals']);
 })();

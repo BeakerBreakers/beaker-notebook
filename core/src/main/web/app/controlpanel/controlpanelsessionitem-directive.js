@@ -55,7 +55,7 @@
     return {
       restrict: 'E',
       template: JST['controlpanel/table'],
-      controller: function($scope) {
+      controller: function($scope, GLOBALS) {
         $scope.getOpenSessionLink = function(session) {
           return bkUtils.getBaseUrl() + '/session/' + session.id;
         };
@@ -134,17 +134,29 @@
           });
         };
 
+
         $scope.getCaption = function(session) {
-          var url = session.notebookUri;
-          if (!url) {
-            return 'New Notebook';
+          var caption = null;
+          if (session.uriType === GLOBALS.FILE_LOCATION.GDRIVE) {
+            var gdriveDoc = JSON.parse(session.notebookUri);
+            console.log("GDRIVE DOC FOR CAPTION: ", gdriveDoc);
+            caption = gdriveDoc.name;
+          } else {
+            caption = session.notebookUri;
           }
-          if (url[url.length - 1] === '/') {
-            url = url.substring(0, url.length - 1);
+          caption = caption || "New Notebook";
+
+          // Trim trailing slash
+          if (_.last(caption) === '/') {
+            caption = caption.substring(0, url.length - 1);
           }
-          return url.replace(/^.*[\\\/]/, '');
+          return caption.replace(/^.*[\\\/]/, '');
         };
+
         $scope.getDescription = function(session) {
+          if (session.uriType === GLOBALS.FILE_LOCATION.GDRIVE) {
+            return "Google Drive notebook downloadable at ".concat(JSON.parse(session.notebookUri).url);
+          }
           return session.notebookUri;
         };
       }
