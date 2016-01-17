@@ -75,6 +75,16 @@ define(function(require, exports, module) {
             }
             bkHelper.showSaveDialog
           }
+        },
+        {
+          name: "Save to Google Drive as... (file)",
+          id: "save-as-google-menuitem",
+          reducedName: "Save to Drive...",
+          tooltip: "Save a file to google drive",
+          sortorder: 100,
+          action: function() {
+            var saveData = bkHelper.getSaveData();
+          }
         }
       ]
     }

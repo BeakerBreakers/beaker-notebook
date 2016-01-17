@@ -181,6 +181,14 @@
           return thenable.then(saveDone, saveFailed);
         }
       },
+      // Get save data
+      getSaveData: function() {
+        if (getCurrentApp() && getCurrentApp().getSaveData) {
+          return getCurrentApp().getSaveData();
+        } else {
+          return false;
+        }
+      },
       showElectronSaveDialog: function() {
         var BrowserWindow = bkElectron.BrowserWindow;
         var Dialog = bkElectron.Dialog;
