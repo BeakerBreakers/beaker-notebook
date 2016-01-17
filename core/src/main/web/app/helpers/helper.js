@@ -246,8 +246,7 @@
         } else {
           var strategy = bkHelper.getFileSystemFileChooserStrategy();
           strategy.treeViewfs.extFilter = [ext];
-          bkUtils.a
-          ll([bkUtils.getHomeDirectory(), bkUtils.getLocalDrives()]).then(function(values) {
+          bkUtils.all([bkUtils.getHomeDirectory(), bkUtils.getLocalDrives()]).then(function(values) {
             if (bkUtils.isWindows) {
               strategy.localDrives = values[1];
             }
@@ -373,7 +372,9 @@
                     'params': {'fileId': resp.id, 'uploadType': 'media'},
                     'body': saveData.notebookModelAsString
                   });
-                  request.execute(function(resp) {});
+                  request.execute(function(file) {
+                    // TODO: set notebookUri to file so that google-things works.
+                  });
                 });
               });
             });
