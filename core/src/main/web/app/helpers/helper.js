@@ -350,7 +350,23 @@
             var name = prompt("Please enter the file name", "");
             var folderId = _.first(data.docs).id;
             console.log("THE USER PICKED THIS FOLDER:", folderId);
-            //TODO actually put the file into google drive
+            gapi.client.load('drive', 'v2', function() {
+
+              var request = gapi.client.request({
+                'path': '/drive/v2/files',
+                'method': 'POST',
+                'body':{
+                  "title" : name + ".bkr",
+                  "parents" : [
+                    {
+                      "id": folderId
+                    }
+                  ]
+                }
+              });
+              request.execute(function(resp) { console.log(resp); });
+            });
+
             //TODO possiblly change the fileloader
           }
         }
