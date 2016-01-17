@@ -84,6 +84,7 @@ define(function(require, exports, module) {
           sortorder: 100,
           action: function() {
             var saveData = bkHelper.getSaveData();
+            bkHelper.saveToGoogleDrive(saveData);
           }
         }
       ]
