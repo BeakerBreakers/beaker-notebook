@@ -75,6 +75,7 @@
         isOpen: '@open'
       },
       controller: function($scope, $timeout, connectionManager, GLOBALS) {
+        console.log("Loaded Controller");
         var showLoadingStatusMessage = function(message, nodigest) {
           if (bkHelper.isElectron) {
             bkElectron.setStatus(message);
@@ -397,6 +398,7 @@
               }
             },
             fromSession: function(sessionId) {
+              console.log("From session");
               $scope.loading = true;
               showLoadingStatusMessage("Loading notebook");
               bkSession.load(sessionId).then(function(session) {
@@ -414,6 +416,7 @@
               });
             },
             fromImport: function(sessionId) {
+              console.log("From Import");
               var notebook = $sessionStorage.importedNotebook;
               var notebookUri = null;
               var uriType = null;
@@ -426,6 +429,7 @@
                   notebookUri, uriType, readOnly, format, notebookModel, false, sessionId, false);
             },
             emptyNotebook: function(sessionId) {
+              console.log("From empty");
               var notebookModel =
                 '{"beaker": "2", "evaluators": [{"name": "Html", "plugin": "Html"},' +
                 '{"name": "JavaScript", "plugin": "JavaScript"}], "cells": []}';
@@ -438,6 +442,7 @@
                   notebookUri, uriType, readOnly, format, notebookModel, false, sessionId, false);
             },
             defaultNotebook: function(sessionId) {
+              console.log("From default");
               bkUtils.getDefaultNotebook().then(function(notebookModel) {
                 var notebookUri = null;
                 var uriType = null;
