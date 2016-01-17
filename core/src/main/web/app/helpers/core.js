@@ -192,9 +192,10 @@
        * @returns {*}
        */
       load: function(doc) {
+        console.log("GDRIVE FILE LOADER CALLED BACK");
         return bkUtils.loadGDrive(doc);
       }
-    }
+    };
 
     // fileSavers are responsible for saving various formats into bkr
     // fileLoader impl must define a 'load' method which returns a then-able

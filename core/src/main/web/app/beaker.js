@@ -206,6 +206,7 @@
                 return _import;
               },
               isOpen: function() {
+                console.log("routing hit existing session open HELLOOOOO");
                 return _open;
               },
               target: function() {
@@ -328,7 +329,9 @@
           if (format) {
             routeParams.format = format;
           }
+          console.log("about to route params");
           var ret = $location.path('/open').search(routeParams);
+          console.log("routing done");
           if (bkUtils.isElectron) {
             $rootScope.$apply();
           }
